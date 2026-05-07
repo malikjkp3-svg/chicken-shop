@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malik's Chicken Shop - Fresh Poultry Products</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header { background-color: #333; color: rgb(255, 255, 255); text-align: center; padding: 1rem; }
+        nav { background-color: #444; padding: 0.5rem; }
+        nav ul { list-style: none; padding: 0; text-align: center; }
+        nav li { display: inline; margin: 0 1rem; }
+        nav a { color: white; text-decoration: none; }
+        main { padding: 2rem; }
+        .product { border: 1px solid #ddd; margin: 1rem 0; padding: 1rem; background: white; }
+        .product img { width: 100%; max-width: 300px; height: auto; margin-bottom: 1rem; }
+        .product h3 { margin-top: 0; }
+        .cart { position: fixed; top: 10px; right: 10px; background: #333; color: white; padding: 1rem; }
+        footer { background-color: #333; color: white; text-align: center; padding: 1rem; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Malik's Chicken Shop</h1>
+        <p>Fresh and Quality Poultry Products with Home Delivery</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#delivery">Delivery</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <main id="home">
+        <h2>Welcome to Malik's Chicken Shop</h2>
+        <p>We offer the freshest chicken products with convenient home delivery service.</p>
+        <section id="products">
+            <h2>Our Products</h2>
+            <div class="product">
+                <img src="https://source.unsplash.com/300x200/?whole-chicken" alt="Whole Chicken">
+                <h3>Whole Chicken</h3>
+                <p>Fresh whole chicken, perfect for roasting or grilling.</p>
+                <p>Price: $10.99 per lb</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://source.unsplash.com/300x200/?chicken-breast" alt="Chicken Breasts">
+                <h3>Chicken Breasts</h3>
+                <p>Boneless, skinless chicken breasts, ideal for quick meals.</p>
+                <p>Price: $12.99 per lb</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://source.unsplash.com/300x200/?chicken-wings" alt="Chicken Wings">
+                <h3>Chicken Wings</h3>
+                <p>Juicy chicken wings, great for parties or snacks.</p>
+                <p>Price: $8.99 per lb</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://source.unsplash.com/300x200/?chicken-thighs" alt="Chicken Thighs">
+                <h3>Chicken Thighs</h3>
+                <p>Tender chicken thighs, full of flavor.</p>
+                <p>Price: $9.99 per lb</p>
+                <button>Add to Cart</button>
+            </div>
+        </section>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>Malik's Chicken Shop has been providing high-quality poultry products since 2020. We source our chickens from local farms and ensure freshness and quality. Enjoy our home delivery service for your convenience.</p>
+        </section>
+        <section id="delivery">
+            <h2>Home Delivery</h2>
+            <p>We provide fast and reliable home delivery within the city. Delivery fee: $5.00 per order. Minimum order: $20.00. Orders placed before 2 PM are delivered the same day.</p>
+        </section>
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Email: info@malikchicken.com</p>
+            <p>Phone: (123) 456-7890</p>
+            <p>Address: 123 Poultry Lane, City, State</p>
+        </section>
+    </main>
+    <div class="cart">
+        <h3>Shopping Cart</h3>
+        <p>Items: 0</p>
+        <p>Subtotal: $0.00</p>
+        <p>Delivery: $0.00</p>
+        <p>Total: $0.00</p>
+        <button>Checkout</button>
+    </div>
+    <div id="delivery-form" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border: 1px solid #ddd; z-index: 1000; max-height: 90vh; overflow-y: auto;">
+        <h3>Checkout</h3>
+        <form id="order-form">
+            <h4>Delivery Details</h4>
+            <label>Name: <input type="text" id="name" required></label><br>
+            <label>Phone: <input type="tel" id="phone" required></label><br>
+            <label>Address: <textarea id="address" required></textarea></label><br>
+            <label>Delivery Time: <input type="datetime-local" id="time"></label><br><br>
+            
+            <h4>Payment Method</h4>
+            <label><input type="radio" name="payment" value="upi" required> UPI Payment</label><br>
+            <label><input type="radio" name="payment" value="cod"> Cash on Delivery</label><br><br>
+            
+            <div id="upi-section" style="display: none; border: 1px solid #ddd; padding: 1rem; margin: 1rem 0;">
+                <h5>UPI Payment Instructions</h5>
+                <p><strong>UPI ID:</strong> malik.chicken@upi</p>
+                <p><strong>Amount to Pay:</strong> <span id="upi-amount">$0.00</span></p>
+                <p>Please transfer the amount using your UPI app (Google Pay, PhonePe, Paytm, etc.)</p>
+                <p>After payment, click "Confirm UPI Payment" button.</p>
+                <label>UPI Transaction ID: <input type="text" id="upi-id"></label><br>
+                <button type="button" onclick="confirmUPI()">Confirm UPI Payment</button>
+            </div>
+            
+            <div id="cod-section" style="display: none; padding: 1rem; border: 1px solid #ddd; margin: 1rem 0;">
+                <h5>Cash on Delivery</h5>
+                <p>Pay <span id="cod-amount">$0.00</span> when the delivery agent arrives.</p>
+                <p>Please have the exact amount ready.</p>
+            </div>
+            
+            <button type="submit">Place Order</button>
+            <button type="button" onclick="hideForm()">Cancel</button>
+        </form>
+    </div>
+    <footer>
+        <p>&copy; 2026 Malik's Chicken Shop. All rights reserved.</p>
+    </footer>
+    <script>
+        // Simple cart functionality with delivery and payment
+        let cart = [];
+        let subtotal = 0;
+        const deliveryFee = 5.00;
+        
+        document.querySelectorAll('.product button').forEach(button => {
+            button.addEventListener('click', () => {
+                const product = button.parentElement;
+                const name = product.querySelector('h3').textContent;
+                const priceText = product.querySelector('p:nth-of-type(2)').textContent;
+                const price = parseFloat(priceText.replace('$', '').replace(' per lb', ''));
+                cart.push({name, price});
+                subtotal += price;
+                updateCart();
+            });
+        });
+        
+        function updateCart() {
+            const delivery = subtotal > 0 ? deliveryFee : 0;
+            const total = subtotal + delivery;
+            document.querySelector('.cart p:nth-of-type(1)').textContent = `Items: ${cart.length}`;
+            document.querySelector('.cart p:nth-of-type(2)').textContent = `Subtotal: $${subtotal.toFixed(2)}`;
+            document.querySelector('.cart p:nth-of-type(3)').textContent = `Delivery: $${delivery.toFixed(2)}`;
+            document.querySelector('.cart p:nth-of-type(4)').textContent = `Total: $${total.toFixed(2)}`;
+        }
+        
+        document.querySelector('.cart button').addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty.');
+                return;
+            }
+            if (subtotal < 20) {
+                alert('Minimum order is $20.00.');
+                return;
+            }
+            const total = subtotal + deliveryFee;
+            document.getElementById('upi-amount').textContent = '$' + total.toFixed(2);
+            document.getElementById('cod-amount').textContent = '$' + total.toFixed(2);
+            document.getElementById('delivery-form').style.display = 'block';
+        });
+        
+        // Payment method selection
+        document.querySelectorAll('input[name="payment"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const upiSection = document.getElementById('upi-section');
+                const codSection = document.getElementById('cod-section');
+                if (e.target.value === 'upi') {
+                    upiSection.style.display = 'block';
+                    codSection.style.display = 'none';
+                } else if (e.target.value === 'cod') {
+                    upiSection.style.display = 'none';
+                    codSection.style.display = 'block';
+                }
+            });
+        });
+        
+        function confirmUPI() {
+            const upiId = document.getElementById('upi-id').value;
+            if (!upiId.trim()) {
+                alert('Please enter your UPI Transaction ID.');
+                return;
+            }
+            alert('UPI payment confirmed! Transaction ID: ' + upiId);
+            document.getElementById('order-form').dispatchEvent(new Event('submit'));
+        }
+        
+        document.getElementById('order-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const time = document.getElementById('time').value;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            const total = (subtotal + deliveryFee).toFixed(2);
+            
+            let paymentDetails = '';
+            if (paymentMethod === 'upi') {
+                const upiId = document.getElementById('upi-id').value;
+                paymentDetails = `\nPayment Method: UPI\nUPI Transaction ID: ${upiId}`;
+            } else {
+                paymentDetails = `\nPayment Method: Cash on Delivery\nAmount to Pay: $${total}`;
+            }
+            
+            alert(`Order placed successfully!\n\nDelivery Details:\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\nTime: ${time || 'ASAP'}\n\nOrder Summary:\nSubtotal: $${subtotal.toFixed(2)}\nDelivery: $${deliveryFee.toFixed(2)}\nTotal: $${total}${paymentDetails}\n\nWe will contact you soon.`);
+            
+            // Reset cart
+            cart = [];
+            subtotal = 0;
+            updateCart();
+            hideForm();
+        });
+        
+        function hideForm() {
+            document.getElementById('delivery-form').style.display = 'none';
+            document.getElementById('order-form').reset();
+        }
+    </script>
+</body>
+</html>
